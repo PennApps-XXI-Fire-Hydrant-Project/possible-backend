@@ -48,4 +48,16 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// Configuring our database connection
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/test', 
+	{useNewUrlParser: true, 
+	useUnifiedTopology: true});
+
+// testing - remove immediately when confirmed
+const Cat = mongoose.model('Cat', { name: String });
+
+const kitty = new Cat({ name: 'Zildjian' });
+kitty.save().then(() => console.log('meow'));
+
 module.exports = app;
